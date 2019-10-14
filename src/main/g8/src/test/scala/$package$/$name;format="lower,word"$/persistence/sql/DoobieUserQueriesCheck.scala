@@ -10,7 +10,7 @@ import org.scalatest._
 class DoobieUserQueriesCheck extends FunSuite with Matchers with doobie.scalatest.IOChecker {
   implicit val cs: ContextShift[IO] = IO.contextShift(ExecutionContexts.synchronous)
 
-  val testDatabaseConfig = DatabaseConfig("localhost", "com.mysql.cj.jdbc.Driver", "name;format="lower,hyphen"$", "root", "password", 10, "UTC")
+  val testDatabaseConfig = DatabaseConfig("localhost", "com.mysql.cj.jdbc.Driver", "$name;format="lower,hyphen"$", "root", "password", 10, "UTC")
 
   val transactor: Aux[IO, Unit] = Transactor.fromDriverManager[IO](
     testDatabaseConfig.driverClassName,
