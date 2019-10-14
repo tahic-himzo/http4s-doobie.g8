@@ -60,5 +60,5 @@ object FeedbackQueries {
       }
 
   def create(title: String, content: String, sourceUser: Int, targetUser: Int): doobie.Update0 =
-    sql"INSERT INTO feedback(title, content, source_user, target_user) VALUES(\$title, \$content, \$sourceUser, $targetUser)".update
+    sql"INSERT INTO feedback(title, content, source_user, target_user) VALUES(\$title, \$content, \$sourceUser, \$targetUser)".update
 }
