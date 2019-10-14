@@ -10,13 +10,13 @@ object Problem {
   implicit val encoder: Encoder[Problem] = deriveEncoder(renaming.snakeCase)
   implicit val decoder: Decoder[Problem] = deriveDecoder(renaming.snakeCase)
 
-  def invalidJson: Problem = model.Problem(
+  def invalidJson: Problem = Problem(
     ProblemTitle("Invalid JSON in request body"),
     ProblemStatusCode(Status.BadRequest.code)
   )
 
   val unexpectedError: Problem =
-    model.Problem(
+    Problem(
       ProblemTitle("Internal Server Error - Please try again later."),
       ProblemStatusCode(Status.InternalServerError.code)
     )
