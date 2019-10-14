@@ -21,7 +21,7 @@ object Main extends IOApp {
     } yield ExitCode.Success
 
   def program[F[_]: ConcurrentEffect](transactor: HikariTransactor[F])(implicit timer: Timer[F]): F[ExitCode] = {
-    val logger             = new Sl4jLogger("flourisher")
+    val logger             = new Sl4jLogger("$name;format="lower,word"$")
     val routesErrorHandler = new RoutesErrorHandler[F](logger)
     println(routesErrorHandler)
     val healthRoutes = new HealthRoutes[F]().service
