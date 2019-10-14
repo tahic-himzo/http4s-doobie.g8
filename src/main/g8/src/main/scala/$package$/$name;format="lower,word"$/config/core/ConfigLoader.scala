@@ -13,13 +13,13 @@ object ConfigLoader {
       envProps:  Map[String, String]): F[ConfigType] = {
 
     val resolveOptions = ConfigResolveOptions.noSystem().appendResolver(new FallbackResolver(envProps))
-    val configName     = s"application.${env.name}.conf"
+    val configName     = s"application.\${env.name}.conf"
     val config         = ConfigFactory.load(configName, ConfigParseOptions.defaults(), resolveOptions)
 
     ConfigSource.fromConfig(config).at(namespace).load[ConfigType] match {
       case Left(err) =>
         val errorString = err.toList.mkString(",")
-        Effect[F].raiseError(new RuntimeException(s"Unable to load config: ${errorString}"))
+        Effect[F].raiseError(new RuntimeException(s"Unable to load config: \${errorString}"))
       case Right(pureConfig) =>
         Effect[F].pure(pureConfig)
     }

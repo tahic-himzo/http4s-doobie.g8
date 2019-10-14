@@ -36,7 +36,7 @@ object FeedbackQueries {
   }
 
   def listBySourceUser(id: Int): doobie.Query0[Feedback] =
-    selectFullFeedback(Some(sql" WHERE f.source_user = $id"))
+    selectFullFeedback(Some(sql" WHERE f.source_user = \$id"))
       .query[(FeedbackRow, User, User)]
       .map {
         case (feedbackRow, sourceUser, targetUser) =>
@@ -44,7 +44,7 @@ object FeedbackQueries {
       }
 
   def listByTargetUser(id: Int): doobie.Query0[Feedback] =
-    selectFullFeedback(Some(sql" WHERE f.target_user = $id"))
+    selectFullFeedback(Some(sql" WHERE f.target_user = \$id"))
       .query[(FeedbackRow, User, User)]
       .map {
         case (feedbackRow, sourceUser, targetUser) =>
@@ -52,7 +52,7 @@ object FeedbackQueries {
       }
 
   def get(sourceUserId: Int, feedbackId: Int): doobie.Query0[Feedback] =
-    selectFullFeedback(Some(sql" WHERE f.source_user = $sourceUserId AND f.id = $feedbackId "))
+    selectFullFeedback(Some(sql" WHERE f.source_user = \$sourceUserId AND f.id = \$feedbackId "))
       .query[(FeedbackRow, User, User)]
       .map {
         case (feedbackRow, sourceUser, targetUser) =>
@@ -60,5 +60,5 @@ object FeedbackQueries {
       }
 
   def create(title: String, content: String, sourceUser: Int, targetUser: Int): doobie.Update0 =
-    sql"INSERT INTO feedback(title, content, source_user, target_user) VALUES($title, $content, $sourceUser, $targetUser)".update
+    sql"INSERT INTO feedback(title, content, source_user, target_user) VALUES(\$title, \$content, \$sourceUser, $targetUser)".update
 }

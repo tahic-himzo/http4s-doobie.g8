@@ -22,8 +22,8 @@ object DoobieUserQueries {
     sql"select id, name from users".query[User]
 
   def get(id: Int): doobie.Query0[User] =
-    sql"select id, name from users where id = $id".query[User]
+    sql"select id, name from users where id = \$id".query[User]
 
   def create(name: String): doobie.Update0 =
-    sql"INSERT INTO users(name) VALUES(${name})".update
+    sql"INSERT INTO users(name) VALUES(\${name})".update
 }
