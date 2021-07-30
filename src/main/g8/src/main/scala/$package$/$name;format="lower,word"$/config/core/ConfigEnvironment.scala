@@ -15,7 +15,7 @@ object ConfigEnvironment {
       .pure(env.get("env"))
       .flatMap {
         case Some("local") => Effect[F].pure(Local)
-        case Some(unknown)          => Effect[F].raiseError(new RuntimeException(s"Unknown value '$unknown' for Environment Variable 'env'"))
+        case Some(unknown)          => Effect[F].raiseError(new RuntimeException(s"Unknown value '\$unknown' for Environment Variable 'env'"))
         case None          => Effect[F].raiseError(new RuntimeException("Environment Variable 'env' is not defined"))
       }
 }
